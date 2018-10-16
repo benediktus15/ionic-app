@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>User</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let i of user" (click)="detail(i)">
+        <!-- <ion-icon name="call" item-start color="secondary"></ion-icon> -->
+        <ion-label>{{i.get('username')}}</ion-label>
+      </button>
+    </ion-list>
+</ion-content>
