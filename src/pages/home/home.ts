@@ -119,6 +119,9 @@ export class HomePage {
   allUser(){
     this.navCtrl.push('UserPage');
   }
+  allCompany(){
+    this.navCtrl.push('CompanyPage');
+  }
 
   // Example //
   // getCompaniesNews(): Observable<any[]>{
