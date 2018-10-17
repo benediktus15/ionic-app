@@ -11,60 +11,31 @@
 
   <p text-center>You are logged in!</p>
 
-  <ion-list>
-    <ion-item-divider>
-          <h2>Add User</h2>
-      </ion-item-divider>
-      <ion-item-group>
-          <ion-item>
-              <ion-label floating>Username</ion-label>
-              <ion-input type="text" placeholder="" [(ngModel)]="newUser.username" required></ion-input>
-          </ion-item>
-          <ion-item>
-              <ion-label floating>Email</ion-label>
-              <ion-input type="email" placeholder="" [(ngModel)]="newUser.email" required></ion-input>
-          </ion-item>
-          <ion-item>
-              <ion-label floating>Company</ion-label>
-              <ion-input type="text" placeholder="" [(ngModel)]="newUser.company" required></ion-input>
-          </ion-item>
-          <ion-item>
-              <ion-label floating>Password</ion-label>
-              <ion-input type="password" placeholder="" [(ngModel)]="newUser.password" required></ion-input>
-          </ion-item>
-              <button ion-button icon-left full round color="primary" (click)="addUser()"><ion-icon name="checkmark-circle"></ion-icon> Submit</button>
-      </ion-item-group>
+  <ion-list #gameList>
+    <ion-refresher (ionRefresh)="refresh($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
 
-    <!-- <ion-item-divider>
-      <h2>Current Scores</h2>
-    </ion-item-divider>
-    <ion-item *ngFor="let gameScore of gameScores" push-detail>
-      <h2>{{gameScore.get('playerName')}}</h2>
-      <p>{{gameScore.get('score')}}</p>
-    </ion-item>
-    <ion-item-divider>
-      <h2>Company</h2>
-    </ion-item-divider>
-    <ion-item *ngFor="let item of company">
-      <h2>{{item.get('name')}}</h2>
-      <p>{{item.get('code')}}</p>
-    </ion-item> -->
+    <ion-item-sliding *ngFor="let score of scores async" #slidingItem>
+      <ion-item detail (click)="detail(score)">
+        <ion-avatar item-start>
+
+          <img [src]="(score.get('Image') != undefined ? score.get('Image').url() : score.get('avatar'))">
+        </ion-avatar>
+        {{score.get("playerName")}}
+      </ion-item>
+    </ion-item-sliding>
   </ion-list>
 
-  <!-- <ion-infinite-scroll (ionInfinite)="$event.waitFor(listScores())">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
+  <button ion-button full round (click)="logOut()">
+    LogOut
+  </button>
 
-  <div text-center>
-    <button ion-button full round (click)="allUser()">
-      User
+  <ion-fab right bottom>
+    <button ion-fab (click)="create()">
+      <ion-icon name="add"></ion-icon>
     </button>
-    <button ion-button full round (click)="allCompany()">
-      Company
-    </button>
-    <button ion-button full round (click)="logOut()">
-      Log out
-    </button>
-  </div>
+  </ion-fab>
 </ion-content>

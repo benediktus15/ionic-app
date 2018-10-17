@@ -1,7 +1,16 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import Parse from 'parse'
 import { ServiceProvider } from '../../providers/service/service';
-import Parse from 'parse';
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
 
 @IonicPage()
 @Component({
@@ -10,49 +19,33 @@ import Parse from 'parse';
 })
 export class LoginPage {
 
-  private username;
-  private password;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: ServiceProvider, public toastCtrl: ToastController, public loadCtrl: LoadingController) {
+  username;
+  password;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public alertCtlr: AlertController, public sp: ServiceProvider, public toastCtlr: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  signUp() {
-    this.navCtrl.push('SignUpPage');
-  }
-
-  signIn() {
-
-    // let loader = this.loadCtrl.create({
-    //   content: 'Signing in...'
-    // });
-    // loader.present();
-
-    // this.sp.login(this.username, this.password).subscribe((success) => {
-
-    //   this.navCtrl.setRoot('HomePage');
-    //   loader.dismissAll();
-    // }, (error) => {
-    //   alert('Invalid username or password');
-    //   loader.dismissAll();
-    // });
-
+  login(){
     Parse.User.logIn(this.username, this.password)
       .then((resp) => {
         console.log('Logged in successfully', resp);
-        // If you app has Tabs, set root to TabsPage
+        
         this.navCtrl.setRoot('HomePage')
       }, err => {
         console.log('Error logging in', err);
 
-        this.toastCtrl.create({
+        this.toastCtlr.create({
           message: err.message,
           duration: 2000
         }).present();
       });
   }
 
+  signUp() {
+    this.navCtrl.push('SignupPage');
+  }
 }

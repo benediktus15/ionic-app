@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import Parse from 'parse';
-import { Observable } from 'rxjs/Observable';
+import { isUndefined } from 'util';
 
 @IonicPage()
 @Component({
@@ -11,28 +11,53 @@ import { Observable } from 'rxjs/Observable';
 })
 export class HomePage {
 
-  company = [];
-
-  user = [];
-  newUser = { username: null, email: null, company: null, password: null };
-
-  newScore = { playerName: null, score: null };
-  gameScores = [];
+  GameScore
+  query
+  results
+  scores = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public sp: ServiceProvider, public toastCtrl: ToastController) {
-    this.listScores();
-    this.listCompany();
+    this.GameScore = Parse.Object.extend("GameScore");
+    this.query = new Parse.Query(this.GameScore);
+    this.query.limit(100);
+    this.initial_query();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
 
-  logOut() {
-    // this.sp.logOut();
-    // this.navCtrl.push('LoginPage')
-    // this.navCtrl.setRoot('LoginPage');
+  refresh(event) {
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+    this.initial_query();
+  }
 
+  async initial_query() {
+
+    await this.query.find().then(
+      results => {
+        this.scores = []
+        for (let i = 0; i < results.length; i++) {
+          let object = results[i];
+          isUndefined
+          this.scores.push(object);
+        }
+      }
+    )
+  }
+
+  detail(score){
+    console.log('detail')
+    this.navCtrl.push('DetailPage', { score: score})
+  }
+
+  create(){
+    this.navCtrl.push('CreatePage')
+  }
+
+  logOut(){
     Parse.User.logOut().then((resp) => {
       console.log('Logged out successfully', resp);
 
@@ -46,107 +71,4 @@ export class HomePage {
       }).present();
     })
   }
-
-  // GetAllScores //
-  listScores(): Promise<any> {
-    let offset = this.gameScores.length;
-    let limit = 10;
-    return this.sp.getGameScores(offset, limit).then(
-      (result) => {
-        for (let i = 0; i < result.length; i++) {
-          let object = result[i];
-          this.gameScores.push(object);
-          // console.log(result)
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  // AddGameScore //
-  postGameScore() {
-    this.sp.addGameScore(this.newScore).then(
-      (gameScore) => {
-        this.gameScores.push(gameScore);
-        this.newScore.playerName = null;
-        this.newScore.score = null;
-        alert("Score added.");
-      },
-      (error) => {
-        console.log(error);
-        console.log("Error adding score.");
-        // alert("Error adding score.");
-      }
-    );
-  }
-
-  // GetAllCompany //
-  listCompany(): Promise<any> {
-    return this.sp.getCompany().then(
-      (result) => {
-        for (let i = 0; i < result.length; i++) {
-          let object = result[i];
-          this.company.push(object);
-          // console.log(result)
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  // AddUser //
-  addUser() {
-    this.sp.addUser(this.newUser).then(
-      (newUsers) => {
-        this.user.push(newUsers);
-        this.newUser.username = null;
-        this.newUser.email = null;
-        this.newUser.company = null;
-        this.newUser.password = null;
-        alert("User added.");
-      },
-      (error) => {
-        console.log(error);
-        console.log("Error adding users.");
-      }
-    );
-  }
-
-  allUser(){
-    this.navCtrl.push('UserPage');
-  }
-  allCompany(){
-    this.navCtrl.push('CompanyPage');
-  }
-
-  // Example //
-  // getCompaniesNews(): Observable<any[]>{
-  //   return new Observable((observer)=>{
-  //     console.log('getCompaniesNews');
-  //     var company=this.sp.anggota.get('company');
-  //     var q = new Parse.Query('News');
-  //     q.equalTo('company',company);
-  //     q.equalTo('statusid',100);
-  //     q.limit(20);
-  //     q.descending('updatedAt');
-  //     q.find().then((results)=>{
-  //       var l=[];
-  //       for(var i=0;i<results.length;i++){
-  //         l.push({
-  //           id : results[i].get('objectId'),
-  //           title : results[i].get('title'),
-  //           imageurl : results[i].get('imageurl'),
-  //           content : results[i].get('content'),
-  //         });
-  //       }
-  //       observer.next(l);
-  //       observer.complete();
-  //     })
-  //   })
-  // }
-
 }
