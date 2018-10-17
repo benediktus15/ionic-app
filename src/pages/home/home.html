@@ -1,14 +1,67 @@
 <ion-header>
+
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title text-center>Ionic + Parse</ion-title>
   </ion-navbar>
+
 </ion-header>
 
+
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+  <p text-center>You are logged in!</p>
+
+  <ion-list>
+    <ion-item-divider>
+          <h2>Add User</h2>
+      </ion-item-divider>
+      <ion-item-group>
+          <ion-item>
+              <ion-label floating>Username</ion-label>
+              <ion-input type="text" placeholder="" [(ngModel)]="newUser.username" required></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Email</ion-label>
+              <ion-input type="email" placeholder="" [(ngModel)]="newUser.email" required></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Company</ion-label>
+              <ion-input type="text" placeholder="" [(ngModel)]="newUser.company" required></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Password</ion-label>
+              <ion-input type="password" placeholder="" [(ngModel)]="newUser.password" required></ion-input>
+          </ion-item>
+              <button ion-button icon-left full round color="primary" (click)="addUser()"><ion-icon name="checkmark-circle"></ion-icon> Submit</button>
+      </ion-item-group>
+
+    <!-- <ion-item-divider>
+      <h2>Current Scores</h2>
+    </ion-item-divider>
+    <ion-item *ngFor="let gameScore of gameScores" push-detail>
+      <h2>{{gameScore.get('playerName')}}</h2>
+      <p>{{gameScore.get('score')}}</p>
+    </ion-item>
+    <ion-item-divider>
+      <h2>Company</h2>
+    </ion-item-divider>
+    <ion-item *ngFor="let item of company">
+      <h2>{{item.get('name')}}</h2>
+      <p>{{item.get('code')}}</p>
+    </ion-item> -->
+  </ion-list>
+
+  <!-- <ion-infinite-scroll (ionInfinite)="$event.waitFor(listScores())">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+
+  <div text-center>
+    <button ion-button full round (click)="allUser()">
+      User
+    </button>
+    <button ion-button full round (click)="logOut()">
+      Log out
+    </button>
+  </div>
 </ion-content>

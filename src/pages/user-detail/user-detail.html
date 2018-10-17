@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Detail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+  <ion-item-divider>
+    <h2>Update User</h2>
+  </ion-item-divider>
+  <ion-item-group>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" placeholder="" [(ngModel)]="this.data.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" placeholder="" [(ngModel)]="this.data.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Company</ion-label>
+      <ion-input type="text" placeholder="" [(ngModel)]="this.data.company"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" placeholder="" [(ngModel)]="this.data.password"></ion-input>
+    </ion-item>
+    <button ion-button icon-left full round color="primary" (click)="save()">
+      <ion-icon name="checkmark-circle"></ion-icon> Submit
+    </button>
+  </ion-item-group>
+
+  </ion-list>
+
+</ion-content>
