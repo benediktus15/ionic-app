@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 
 import Parse from 'parse';
@@ -23,10 +23,19 @@ export class DetailPage {
   playerName
   imageUrl
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: ServiceProvider) {
+  // data
 
-    // this.initial_query(this.navParams.get('key'));
-    this.id = this.navParams.get(this.score)
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sp: ServiceProvider, public alertCtlr: AlertController) {
+
+    // this.data=navParams.get('score');
+    // var d = this.data.toJSON();
+    // this.data = {
+    //   playerName: d.playerName,
+    //   score: d.score,
+    // }
+
+    this.initial_query(this.navParams.get('key'));
+    // this.id = this.navParams.get(this.score)
   }
 
   ionViewDidLoad() {
@@ -43,16 +52,23 @@ export class DetailPage {
         this.playerName = gameScore.get("playerName");
         this.id = gameScore.id;
 
-        if (!isUndefined(  gameScore.get("Image")))
-        this.imageUrl = gameScore.get("Image").url();
-        else
-        this.imageUrl = gameScore.get("avatar");
-
       }, (error) => {
         // The object was not retrieved successfully.
         // error is a Parse.Error with an error code and message.
+        
+        // this.presentAlert("Error:", error.code, error.message)
       });
 
+  }
+
+  async presentAlert(header, subtitle, message) {
+    const alert = await this.alertCtlr.create({
+      title: header,
+      subTitle: subtitle,
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
 }

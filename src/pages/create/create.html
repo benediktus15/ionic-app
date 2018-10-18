@@ -15,4 +15,16 @@
 
 <ion-content padding>
 
+    <form [formGroup]="infoForm">
+        <ion-item>
+          <ion-label floating>Player Name</ion-label>
+          <ion-input type="text" formControlName="playerName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Score</ion-label>
+          <ion-input type="number" formControlName="score"></ion-input>
+        </ion-item>
+        <button ion-button round color="secondary" block [disabled]="!infoForm.valid" (click)="saveInfo()">Save</button>
+      </form>
+
 </ion-content>

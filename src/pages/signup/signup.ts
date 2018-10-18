@@ -55,7 +55,6 @@ export class SignupPage {
 
   };
 
-
   async presentAlert(header, subtitle, message) {
     const alert = await this.alertCtlr.create({
       title: header,

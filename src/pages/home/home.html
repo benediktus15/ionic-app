@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title text-center>Ionic + Parse</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="logOut()">
+          <ion-icon name="log-out"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -11,27 +16,38 @@
 
   <p text-center>You are logged in!</p>
 
-  <ion-list #gameList>
-    <ion-refresher (ionRefresh)="refresh($event)">
+  <ion-list>
+    <!-- <ion-refresher (ionRefresh)="refresh($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
         refreshingText="Refreshing...">
       </ion-refresher-content>
-    </ion-refresher>
+    </ion-refresher> -->
 
     <ion-item-sliding *ngFor="let score of scores async" #slidingItem>
-      <ion-item detail (click)="detail(score)">
+      <ion-item detail (click)="detail(score.id)">
         <ion-avatar item-start>
 
           <img [src]="(score.get('Image') != undefined ? score.get('Image').url() : score.get('avatar'))">
         </ion-avatar>
-        {{score.get("playerName")}}
+        <h2> {{score.get("playerName")}}</h2>
+        <p> {{score.get("score")}}</p>
       </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="primary" (click)="edit(score.id, slidingItem)">
+          <ion-icon name="hammer"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="delete(score, i)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 
-  <button ion-button full round (click)="logOut()">
+  <!-- <button ion-button full round (click)="logOut()">
     LogOut
-  </button>
+  </button> -->
 
   <ion-fab right bottom>
     <button ion-fab (click)="create()">

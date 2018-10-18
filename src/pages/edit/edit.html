@@ -14,5 +14,15 @@
 
 
 <ion-content padding>
-
+  <form [formGroup]="editForm">
+    <ion-item>
+      <ion-label floating>Player Name</ion-label>
+      <ion-input type="text" formControlName="player_name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Score</ion-label>
+      <ion-input type="number" formControlName="player_score"></ion-input>
+    </ion-item>
+    <button ion-button round color="secondary" block [disabled]="!editForm.valid" (click)="updateScore()">Update</button>
+  </form>
 </ion-content>
