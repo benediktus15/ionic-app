@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>create</ion-title>
+    <ion-title>Create</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -24,7 +24,7 @@
           <ion-label floating>Score</ion-label>
           <ion-input type="number" formControlName="score"></ion-input>
         </ion-item>
-        <button ion-button round color="secondary" block [disabled]="!infoForm.valid" (click)="saveInfo()">Save</button>
+        <button ion-button round color="secondary" block [disabled]="!infoForm.valid" (click)="create()">Save</button>
       </form>
 
 </ion-content>

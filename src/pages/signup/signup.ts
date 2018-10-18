@@ -6,13 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Parse from 'parse';
 import { ServiceProvider } from '../../providers/service/service';
 
-/**
- * Generated class for the SignupPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-signup',

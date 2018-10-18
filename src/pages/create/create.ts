@@ -3,15 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceProvider } from '../../providers/service/service';
 
-import Parse from 'parse';
-
-/**
- * Generated class for the CreatePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-create',
@@ -32,18 +23,15 @@ export class CreatePage {
     console.log('ionViewDidLoad CreatePage');
   }
 
-  saveInfo() {
-    const GameScore = Parse.Object.extend('GameScore');
-    const gameScore = new GameScore();
+  create() {
+    this.sp.gameScore.set('score', this.infoForm.value.score);
+    this.sp.gameScore.set('playerName', this.infoForm.value.playerName);
 
-    gameScore.set('score', this.infoForm.value.score);
-    gameScore.set('playerName', this.infoForm.value.playerName);
-
-    gameScore.save()
+    this.sp.gameScore.save()
       .then((gameScore) => {
         // Execute any logic that should take place after the object is saved.
         // alert('New object created with objectId: ' + gameScore.id);
-        
+
         this.presentAlert("success!", "New object created with objectId: ", gameScore.id);
         this.navCtrl.setRoot('HomePage');
       }, (error) => {
