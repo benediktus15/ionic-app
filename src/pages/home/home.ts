@@ -71,6 +71,13 @@ export class HomePage {
     await alert.present();
   }
 
+  user(){
+    this.navCtrl.push('UserPage')
+  }
+  company(){
+    this.navCtrl.push('CompanyPage')
+  }
+
   logOut() {
     this.sp.logOut()
     this.app.getRootNav().setRoot('LoginPage');

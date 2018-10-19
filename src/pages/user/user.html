@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>user</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <ion-item-sliding *ngFor="let user of this.sp.users async">
+          <ion-item push-detail>
+            <h2> {{user.get("username")}}</h2>
+            <p> {{user.get("company").get("name")}}</p>
+          </ion-item>
+          <!-- <ion-item-options side="left">
+            <button ion-button color="primary" (click)="edit(score)">
+              <ion-icon name="hammer"></ion-icon>
+              Edit
+            </button>
+            <button ion-button color="danger" (click)="delete(score, i)">
+              <ion-icon name="trash"></ion-icon>
+              Delete
+            </button>
+          </ion-item-options> -->
+        </ion-item-sliding>
+      </ion-list>
+    
+
+</ion-content>

@@ -16,6 +16,13 @@
 
   <p text-center>You are logged in!</p>
 
+  <button ion-button round small (click)="user()">
+      User
+    </button>
+    <button ion-button round small (click)="company()">
+      Company
+    </button>
+    
   <ion-list>
     <ion-item-sliding *ngFor="let score of this.sp.scores async" #slidingItem>
       <ion-item detail (click)="detail(score)">

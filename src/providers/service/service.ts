@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import { Parse } from 'parse';
 
 @Injectable()
@@ -14,6 +14,9 @@ export class ServiceProvider {
   public query;
   public scores = [];
   public score;
+
+  public User;
+  public users
 
   public player;
 
@@ -46,6 +49,39 @@ export class ServiceProvider {
         }
       }
     )
+  }
+
+  // get data class GameScore
+  async getUsers(company) {
+    const User = Parse.Object.extend("User");
+    let query = new Parse.Query(User);
+    query.equalTo('company', company);
+    query.include('Company');
+    query.ascending('username');
+    this.users = await query.find();
+  }
+
+  public company;
+  public companys;
+
+  async getCompany(){
+    const Company = Parse.Object.extend("Company");
+    let query = new Parse.Query(Company);
+
+    query.ascending('username');
+    this.companys = await query.find();
+  }
+
+  public members;
+  async companyMember(){
+    var company = new Parse.Object("Company");
+    // company.set("objcetId", Parse.User.current());
+    // company.equalTo("objectId", Parse.User.current())
+    // company.limit(1);
+
+    // var RS = await company.find();
+    this.members = company.get('objectId');
+    // this.members = await q.find();
   }
 
   // delete(score) {
@@ -86,7 +122,7 @@ export class ServiceProvider {
   //   })
   // }
 
-  newPlayer(){
+  newPlayer() {
     const GamePlayer = Parse.Object.extend("GamePlayer");
     this.player = new GamePlayer();
   }
@@ -99,7 +135,7 @@ export class ServiceProvider {
     })
   }
 
-  create(){
+  create() {
     const GameScore = Parse.Object.extend('GameScore');
     this.gameScore = new GameScore();
   }
